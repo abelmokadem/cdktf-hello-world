@@ -12,4 +12,4 @@ jobs:
     - uses: DeterminateSystems/nix-installer-action@v9
     - uses: DeterminateSystems/magic-nix-cache-action@v2
     - run: nix-build
-    - run: nix-shell --run "echo test"
+    - run: nix-shell --run "cdktf synth"
