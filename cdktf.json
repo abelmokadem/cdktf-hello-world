@@ -1,0 +1,12 @@
+{
+  "language": "python",
+  "app": "python3 ./main.py",
+  "projectId": "8f51f304-aa00-4750-8994-2a9e3b77ecc9",
+  "sendCrashReports": "false",
+  "terraformProviders": [],
+  "terraformModules": [],
+  "codeMakerOutput": "imports",
+  "context": {
+
+  }
+}

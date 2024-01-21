@@ -1,0 +1,4 @@
+cdktf~=0.20.1
+pytest
+
+cdktf-cdktf-provider-aws~=19.1.1
