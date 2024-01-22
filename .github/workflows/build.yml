@@ -25,6 +25,7 @@ jobs:
           path: cdktf.out
   diff_acceptance:
     runs-on: ubuntu-latest
+    needs: [ build ]
     steps:
       - name: "Install Nix"
         uses: DeterminateSystems/nix-installer-action@v9
