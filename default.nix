@@ -1,25 +1,26 @@
-with import <nixpkgs> {
+let
+  pkgs = import <nixpkgs> {
     config.allowUnfree = true;
-};
-with pkgs.python311Packages;
+  };
 
-stdenv.mkDerivation {
-    name = "pythoncdktf";
+  python-env = pkgs.python311.withPackages (pp: with pp; [ pip wheel cython ]);
+in
+pkgs.mkShell {
 
-    buildInputs = [
-        python311
-        python311Packages.virtualenv
-        python311Packages.pip
-    ];
+  buildInputs = [
+    python-env
+  ];
 
-    packages = [
-        pkgs."nodejs_20"
-        pkgs.nodePackages."cdktf-cli"
-        pkgs.terraform
-    ];
+  packages = [
+    pkgs."nodejs_20"
+    pkgs.nodePackages."cdktf-cli"
+    pkgs.terraform
+  ];
 
-    shellHook = ''
-        [[ -d .venv ]] || python -m venv .venv
-        source .venv/bin/activate
-    '';
+  shellHook = ''
+    [[ -d .venv ]] || python -m venv .venv
+    source .venv/bin/activate
+
+    pip install -r requirements.txt
+  '';
 }
