@@ -7,15 +7,12 @@ on:
 jobs:
   build:
     runs-on: ubuntu-latest
+    container: abelmokadem/cdktf-python:1
     steps:
       - name: "Git Checkout"
         uses: actions/checkout@v4
-      - name: "Install Nix"
-        uses: DeterminateSystems/nix-installer-action@v9
-      - name: "Nix Cache"
-        uses: DeterminateSystems/magic-nix-cache-action@v2
-      - name: "Build Nix Environment"
-        run: nix-build
+      - name: "Install Requirements"
+        run: nix-shell --run "pip install -r requirements"
       - name: "CDK TF Synthesize"
         run: nix-shell --run "cdktf synth"
       - name: "Archive CDK TF artifacts"
@@ -25,18 +22,13 @@ jobs:
           path: cdktf.out
   diff_acceptance:
     runs-on: ubuntu-latest
+    container: abelmokadem/cdktf-python:1
     needs: [ build ]
     steps:
-      - name: "Install Nix"
-        uses: DeterminateSystems/nix-installer-action@v9
-      - name: "Nix Cache"
-        uses: DeterminateSystems/magic-nix-cache-action@v2
-      - name: "Build Nix Environment"
-        run: nix-build
       - name: "Download CDK TF artifacts"
         uses: actions/download-artifact@v4
         with:
           name: cdktf-artifacts
       - name: "Deploy acceptance stack"
-        run: nix-shell --run " cdktf diff --skip-synth staging-hello-world-stack"
+        run: nix-shell --run "cdktf diff --skip-synth staging-hello-world-stack"
 
