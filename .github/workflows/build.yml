@@ -33,6 +33,7 @@ jobs:
         uses: actions/download-artifact@v4
         with:
           name: cdktf-artifacts
+          path: cdktf.out
       - name: "Install Nix"
         uses: DeterminateSystems/nix-installer-action@v9
       - name: "Nix Cache"
